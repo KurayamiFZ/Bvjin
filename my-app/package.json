@@ -19,6 +19,7 @@
     "@types/react-dom": "^19",
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.6",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
