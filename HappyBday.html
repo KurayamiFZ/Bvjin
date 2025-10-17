@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, My Universe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease-in-out;
+    }
+
+    .page.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .galaxy-container {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at center, #1a0033 0%, #000000 70%);
+      overflow: hidden;
+    }
+
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .shooting-star {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+      transform-origin: right center;
+      opacity: 0;
+    }
+
+    .shooting-star::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      right: 0;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 1);
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: rotate(-45deg) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: rotate(-45deg) translateX(-800px);
+        opacity: 0;
+      }
+    }
+
+    .shooting-star-1 {
+      top: 15%;
+      right: 8%;
+      width: 100px;
+      animation: shoot 2.5s ease-out 2s infinite;
+    }
+
+    .shooting-star-2 {
+      top: 70%;
+      right: 35%;
+      width: 120px;
+      animation: shoot 2.8s ease-out 7s infinite;
+    }
+
+    .shooting-star-3 {
+      top: 35%;
+      right: 60%;
+      width: 90px;
+      animation: shoot 2.3s ease-out 4.5s infinite;
+    }
+
+    .shooting-star-4 {
+      top: 85%;
+      right: 15%;
+      width: 110px;
+      animation: shoot 2.6s ease-out 11s infinite;
+    }
+
+    .shooting-star-5 {
+      top: 25%;
+      right: 45%;
+      width: 95px;
+      animation: shoot 2.4s ease-out 14s infinite;
+    }
+
+    .shooting-star-6 {
+      top: 50%;
+      right: 5%;
+      width: 105px;
+      animation: shoot 2.7s ease-out 9.5s infinite;
+    }
+
+    .shooting-star-7 {
+      top: 60%;
+      right: 70%;
+      width: 85px;
+      animation: shoot 2.2s ease-out 6s infinite;
+    }
+
+    .shooting-star-8 {
+      top: 10%;
+      right: 40%;
+      width: 115px;
+      animation: shoot 2.9s ease-out 13s infinite;
+    }
+
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      animation: pulse 10s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.25; }
+      50% { transform: scale(1.15); opacity: 0.4; }
+    }
+
+    .nebula-1 {
+      top: 10%;
+      left: 15%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.5), transparent);
+    }
+
+    .nebula-2 {
+      bottom: 10%;
+      right: 10%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(75, 0, 130, 0.4), transparent);
+      animation-delay: 3s;
+    }
+
+    .constellation {
+      position: absolute;
+      top: 20%;
+      right: 15%;
+      width: 200px;
+      height: 200px;
+      opacity: 0.4;
+    }
+
+    .constellation-dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    }
+
+    .constellation-line {
+      position: absolute;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.3);
+      transform-origin: left center;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      max-width: 750px;
+      padding: 4rem 3rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      letter-spacing: 4px;
+      margin-bottom: 3rem;
+      background: linear-gradient(135deg, #e6d5ff 0%, #ffffff 50%, #f0e6ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.3;
+      animation: titleGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { filter: brightness(1) drop-shadow(0 0 20px rgba(230, 213, 255, 0.3)); }
+      50% { filter: brightness(1.2) drop-shadow(0 0 30px rgba(230, 213, 255, 0.5)); }
+    }
+
+    .verse {
+      font-size: 1.4rem;
+      line-height: 2.5;
+      color: #dcdcdc;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 15px rgba(220, 220, 220, 0.3);
+    }
+
+    .verse-line {
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, #d4a5ff, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      font-weight: 400;
+      filter: drop-shadow(0 0 8px rgba(212, 165, 255, 0.6));
+    }
+
+    .signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #ffd4e5, #ffe5b4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      letter-spacing: 1.5px;
+      margin-top: 3rem;
+      font-weight: 400;
+      filter: drop-shadow(0 0 12px rgba(255, 212, 229, 0.4));
+    }
+
+    /* Welcome Page Styles */
+    .welcome-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    .welcome-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      background: linear-gradient(135deg, #e6d5ff, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: titleGlow 4s ease-in-out infinite;
+    }
+
+    .welcome-subtitle {
+      font-size: 1.2rem;
+      color: #b19cd9;
+      margin-bottom: 2rem;
+      letter-spacing: 1px;
+      text-shadow: 0 0 12px rgba(177, 156, 217, 0.5);
+    }
+
+    .cosmic-button {
+      position: relative;
+      padding: 1.2rem 3rem;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: #ffffff;
+      background: transparent;
+      border: 2px solid rgba(230, 213, 255, 0.5);
+      border-radius: 50px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      z-index: 1;
+    }
+
+    .cosmic-button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.6), rgba(75, 0, 130, 0.4));
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+      z-index: -1;
+    }
+
+    .cosmic-button:hover {
+      border-color: rgba(230, 213, 255, 0.9);
+      box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+      transform: translateY(-3px);
+    }
+
+    .cosmic-button:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .nav-button {
+      position: fixed;
+      bottom: 2rem;
+      padding: 0.8rem 2rem;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.7);
+      background: rgba(138, 43, 226, 0.2);
+      border: 1px solid rgba(230, 213, 255, 0.3);
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+
+    .nav-button:hover {
+      background: rgba(138, 43, 226, 0.4);
+      border-color: rgba(230, 213, 255, 0.6);
+      color: #ffffff;
+    }
+
+    .nav-back {
+      left: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.8rem;
+        letter-spacing: 2px;
+      }
+      .verse {
+        font-size: 1.2rem;
+        line-height: 2.2;
+      }
+      .content {
+        padding: 2.5rem 2rem;
+      }
+      .signature {
+        font-size: 1.3rem;
+      }
+      .welcome-title {
+        font-size: 2.2rem;
+      }
+      .cosmic-button {
+        padding: 1rem 2.5rem;
+        font-size: 1rem;
+      }
+      .nav-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .verse {
+        font-size: 1.1rem;
+      }
+      .welcome-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Welcome Page -->
+  <div id="welcomePage" class="page active">
+    <div class="galaxy-container">
+      <div class="nebula nebula-1"></div>
+      <div class="nebula nebula-2"></div>
+      
+      <div class="stars" id="starfield1">
+        <div class="shooting-star shooting-star-1"></div>
+        <div class="shooting-star shooting-star-2"></div>
+        <div class="shooting-star shooting-star-3"></div>
+        <div class="shooting-star shooting-star-4"></div>
+        <div class="shooting-star shooting-star-5"></div>
+        <div class="shooting-star shooting-star-6"></div>
+        <div class="shooting-star shooting-star-7"></div>
+        <div class="shooting-star shooting-star-8"></div>
+      </div>
+
+      <div class="constellation" id="constellation1"></div>
+      
+      <div class="welcome-container">
+        <div>
+          <h1 class="welcome-title">✨ A Cosmic Journey Awaits</h1>
+          <p class="welcome-subtitle">Click below to unveil your message</p>
+        </div>
+        <button class="cosmic-button" onclick="showMessage()">Enter the Stars</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Page -->
+  <div id="messagePage" class="page">
+    <div class="galaxy-container">
+      <div class="nebula nebula-1"></div>
+      <div class="nebula nebula-2"></div>
+      
+      <div class="stars" id="starfield2">
+        <div class="shooting-star shooting-star-1"></div>
+        <div class="shooting-star shooting-star-2"></div>
+        <div class="shooting-star shooting-star-3"></div>
+        <div class="shooting-star shooting-star-4"></div>
+        <div class="shooting-star shooting-star-5"></div>
+        <div class="shooting-star shooting-star-6"></div>
+        <div class="shooting-star shooting-star-7"></div>
+        <div class="shooting-star shooting-star-8"></div>
+      </div>
+
+      <div class="constellation" id="constellation2"></div>
+      
+      <div class="content">
+        <h1>Happy Birthday, My Universe</h1>
+        
+        <div class="verse">
+          <span class="verse-line">If the <span class="highlight">stars</span> could speak, they'd sing your name tonight.</span>
+          <span class="verse-line">You are the quiet miracle in my chaos,</span>
+          <span class="verse-line">the reason my <span class="highlight">world</span> feels infinite.</span>
+          <span class="verse-line">Every year with <span class="highlight">you</span> is a new constellation—</span>
+          <span class="verse-line">a map of moments only we can read,</span>
+          <span class="verse-line">written across the dark in light.</span>
+        </div>
+        
+        <div class="signature">
+          — You're my favorite sky.
+        </div>
+      </div>
+
+      <button class="nav-button nav-back" onclick="showWelcome()">← Back</button>
+    </div>
+  </div>
+
+  <script>
+    function createStarfield(containerId, constellationId) {
+      const starfield = document.getElementById(containerId);
+      const starCount = 120;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        const size = Math.random() * 2.5 + 0.5;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (Math.random() * 4 + 3) + 's';
+        
+        starfield.appendChild(star);
+      }
+
+      // Create constellation
+      const constellation = document.getElementById(constellationId);
+      const dots = [
+        { x: 10, y: 20 },
+        { x: 30, y: 15 },
+        { x: 50, y: 18 },
+        { x: 70, y: 25 },
+        { x: 80, y: 45 },
+        { x: 70, y: 65 },
+        { x: 60, y: 80 }
+      ];
+
+      dots.forEach(dot => {
+        const dotEl = document.createElement('div');
+        dotEl.className = 'constellation-dot';
+        dotEl.style.left = dot.x + '%';
+        dotEl.style.top = dot.y + '%';
+        constellation.appendChild(dotEl);
+      });
+
+      for (let i = 0; i < dots.length - 1; i++) {
+        const line = document.createElement('div');
+        line.className = 'constellation-line';
+        
+        const x1 = dots[i].x;
+        const y1 = dots[i].y;
+        const x2 = dots[i + 1].x;
+        const y2 = dots[i + 1].y;
+        
+        const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+        
+        line.style.width = (length * 2) + 'px';
+        line.style.left = x1 + '%';
+        line.style.top = y1 + '%';
+        line.style.transform = `rotate(${angle}deg)`;
+        
+        constellation.appendChild(line);
+      }
+    }
+
+    // Initialize both starfields
+    createStarfield('starfield1', 'constellation1');
+    createStarfield('starfield2', 'constellation2');
+
+    function showMessage() {
+      document.getElementById('welcomePage').classList.remove('active');
+      document.getElementById('messagePage').classList.add('active');
+    }
+
+    function showWelcome() {
+      document.getElementById('messagePage').classList.remove('active');
+      document.getElementById('welcomePage').classList.add('active');
+    }
+  </script>
+</body>
+</html>
