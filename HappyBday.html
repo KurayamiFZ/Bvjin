@@ -16,7 +16,6 @@
 
     body {
       font-family: 'Quicksand', sans-serif;
-      overflow: hidden;
       background: #000;
     }
 
@@ -43,11 +42,10 @@
       align-items: center;
       justify-content: center;
       background: radial-gradient(ellipse at center, #1a0033 0%, #000000 70%);
-      overflow: hidden;
     }
 
     .stars {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -161,7 +159,7 @@
     }
 
     .nebula {
-      position: absolute;
+      position: fixed;
       border-radius: 50%;
       filter: blur(80px);
       opacity: 0.3;
